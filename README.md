@@ -206,6 +206,7 @@ This dashboard provides an overview of shipment records, profit, average shippin
 
 <img width="668" height="380" alt="Screenshot 2026-10-14 095605" src="https://github.com/user-attachments/assets/abbd02ae-0d29-40fa-9cf6-3f4081b51928" />
 
+
 Page 2: Delivery Performance Analysis
 
 This dashboard compares late-delivery rates across product categories, regions, shipping modes, and customer segments
