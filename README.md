@@ -204,15 +204,15 @@ Page 1: Delivery Overview
 
 This dashboard provides an overview of shipment records, profit, average shipping duration, late-delivery rate, city-level performance, and delivery status.
 
-<img width="668" height="380" alt="Screenshot 2026-10-14 095605" src="https://github.com/user-attachments/assets/abbd02ae-0d29-40fa-9cf6-3f4081b51928" />
+<img width="665" height="400" alt="PAGE 1" src="https://github.com/user-attachments/assets/f174c1f8-5dad-48c4-9569-e040c994553a" />
+
 
 
 Page 2: Delivery Performance Analysis
 
 This dashboard compares late-delivery rates across product categories, regions, shipping modes, and customer segments
 
-<img width="664" height="374" alt="Screenshot 2026-10-14 095630" src="https://github.com/user-attachments/assets/ae6ec320-5411-43e7-ad62-d93e98f42d4b" />
-
+<img width="660" height="376" alt="PAGE 2" src="https://github.com/user-attachments/assets/d1038b08-2720-423d-8007-0999df953424" />
 
 
 ## Suggested Repository Structure
