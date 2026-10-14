@@ -2,7 +2,7 @@
 
 ## 1. Project Overview
 
-Delivery Intelligence is a data analytics project that examines shipment performance using the DataCo Smart Supply Chain dataset. It combines Python (pandas) for data cleaning and analysis with Power BI for interactive reporting.
+Delivery Intelligence is a data analytics project that examines shipment performance using the DataCo Smart Supply Chain dataset. It combines Python (pandas) for data cleaning, MYSQL for data validation and analysis with Power BI for interactive reporting.
 
 The project compares actual shipping duration with scheduled shipping duration to measure delivery delays and identify patterns across shipping modes, regions, product categories, customer segments, cities, and order months.
 
@@ -14,70 +14,18 @@ This project converts shipment data into measurable KPIs and visual insights to 
 
 The analysis identifies patterns and differences in delivery performance. It does not independently establish the causes of delays.
 
-## 3. Project Objectives
 
-- Measure total shipment records and valid shipping-duration records.
-- Calculate late shipment records and late-delivery rate.
-- Calculate average actual shipping duration and delivery delay.
-- Compare performance across shipping modes, regions, and product categories.
-- Examine differences across customer segments and cities in Power BI.
-- Analyze monthly delivery patterns using order dates.
-- Present key metrics through an interactive Power BI report.
-
-## 4. Project Scope
-
-- Loading and validating the dataset using pandas.
-- Converting shipping-duration columns to numeric values.
-- Handling missing or invalid shipping-duration values.
-- Calculating delay days and classifying valid records as Early, On Time, or Late.
-- Calculating overall delivery KPIs.
-- Grouping and comparing delivery performance by shipping mode, region, and category.
-- Producing monthly summary data when the order-date field is available.
-- Exporting CSV files for Power BI.
-- Visualizing delivery metrics and comparisons.
-
-
-## 5. Dataset and KPI Definitions
-
-The Python script expects `DataCoSupplyChainDataset.csv` and checks for these required columns:
-
-- `Days for shipping (real)`
-- `Days for shipment (scheduled)`
-- `Shipping Mode`
-- `Order Region`
-- `Category Name`
-- `Order Id`
-
-The script also uses `order date (DateOrders)` when available.
-
-### Derived fields
-
-- `actual_shipping_days`: numeric conversion of actual shipping duration.
-- `scheduled_shipping_days`: numeric conversion of scheduled shipping duration.
-- `delay_days`: actual shipping duration minus scheduled shipping duration.
-- `delivery_status_analysis`: delivery classification based on the calculated delay.
-
-The classifications are:
-
-- **Late:** Actual duration is greater than scheduled duration.
-- **On Time:** Actual duration equals scheduled duration.
-- **Early:** Actual duration is less than scheduled duration.
-
-### Key performance indicators
+## 3. Key performance indicators
 
 - **Total Shipment Records:** Total number of rows in the original dataset.
 - **Valid Shipment Records:** Records containing both actual and scheduled shipping durations.
-- **Invalid Duration Records:** Records missing either duration after numeric conversion.
 - **Late Shipment Records:** Valid records classified as Late.
 - **Late-Delivery Rate:** Late records divided by valid-duration records, multiplied by 100.
 - **Average Actual Shipping Days:** Average actual shipping duration among valid records.
 - **Average Delay Days:** Average difference between actual and scheduled shipping duration.
 
-**Metric limitation:** These calculations count rows, not distinct order IDs. An order appearing on multiple rows can contribute multiple times. Therefore, record-level KPIs should not be described as unique-order counts.
 
-Monthly analysis groups by order month, not delivery-arrival month.
-
-## 6. Python Code Explanation
+## 4. Python Code Explanation
 
 The script `delivery_analysis.py` performs the following operations.
 
@@ -141,7 +89,7 @@ Creates `delivery_cleaned.csv`, retaining the original columns and adding the ca
 
 Prints the output directory and lists the generated CSV files.
 
-## 7. Generated Output Files
+### Generated Output Files
 
 The script creates the following files inside `delivery_outputs/`.
 
@@ -154,68 +102,63 @@ The script creates the following files inside `delivery_outputs/`.
 | `monthly_analysis.csv` | Monthly analysis by order month, when the date field is available |
 | `delivery_cleaned.csv` | Cleaned dataset for Power BI |
 
-## 8. Technologies Used
+## 5. SQL Analysis
 
-- **Python:** Analysis workflow and data processing.
-- **pandas:** Data cleaning, grouping, calculations, and CSV exports.
-- **Power BI Desktop:** KPI cards, charts, and report visualization.
-- **Git and GitHub:** Version control and project documentation.
+SQL complemented Python and Power BI by adding data validation and deeper analysis of delivery risks and customer ordering patterns.
 
-## 9. How to Run the Project
+### 1. Data Quality Checks
+- Checked duplicates, missing values, invalid shipping durations, and status inconsistencies.
 
-### Requirements
+**Business value:** Improves data reliability.
 
-- Python 3.9 or later, or another compatible Python version.
-- pandas.
-- The DataCo CSV dataset.
-- Power BI Desktop to open the report.
+### 2. Regional Risk Ranking
+- Used CTEs and `DENSE_RANK()` to rank regions by late-delivery rate within each market, excluding groups with fewer than 100 records.
 
-Install pandas:
+**Business value:** Helps prioritize regional investigations.
 
-```bash
-python -m pip install pandas
-```
+### 3. High-Risk Combinations
+- Analyzed market, region, shipping mode, and product category combinations to identify groups with elevated late-delivery rates.
 
-### Run the Python script
+**Business value:** Highlights operational segments for further investigation.
 
-1. Place `delivery_analysis.py` and `DataCoSupplyChainDataset.csv` in the expected project directory.
-2. Update the configured path if necessary.
-3. Open a terminal in that directory.
-4. Run:
+### 4. Customer and Order Analysis
+- Analyzed distinct order frequency, repeat ordering, and customer-level late-delivery rates.
 
-```bash
-python delivery_analysis.py
-```
+**Business value:** Provides insights into customer ordering patterns and delivery experience.
 
-5. Check the `delivery_outputs` folder for the generated CSV files.
-6. Open `Delivery_Delay_Analysis.pbix` in Power BI Desktop and refresh its data source if the files have moved.
+## 6. POWERBI Dashboard
 
-The current script uses this Windows-specific path:
-
-```python
-BASE_DIR = Path(r"D:\DATA ANALYTICS\PROJECTS\DELIVERY_INTELLIGENCE_PROJECT")
-```
-
-Change it to match the directory on your computer.
-
-## 10. POWERBI Dashboard
-
-Page 1: Delivery Overview
+### Page 1: Delivery Overview
 
 This dashboard provides an overview of shipment records, profit, average shipping duration, late-delivery rate, city-level performance, and delivery status.
 
 <img width="665" height="400" alt="PAGE 1" src="https://github.com/user-attachments/assets/f174c1f8-5dad-48c4-9569-e040c994553a" />
 
-
-
-Page 2: Delivery Performance Analysis
+### Page 2: Delivery Performance Analysis
 
 This dashboard compares late-delivery rates across product categories, regions, shipping modes, and customer segments
 
 <img width="660" height="376" alt="PAGE 2" src="https://github.com/user-attachments/assets/d1038b08-2720-423d-8007-0999df953424" />
 
 
-## Suggested Repository Structure
+## 7. Technologies Used
+
+- **Python:** Analysis workflow and data processing.
+- **MYSQL:** data quality validation,investigation of high-risk combinations, and customer ordering patterns.
+- **pandas:** Data cleaning, grouping, calculations, and CSV exports.
+- **Power BI Desktop:** KPI cards, charts, and report visualization.
+- **Git and GitHub:** Version control and project documentation.
+
+### Requirements
+
+- Python 3.9 or later, or another compatible Python version.
+- pandas.
+- MYSQL 8 and MYSQL workbench.
+- The DataCo CSV dataset.
+- Power BI Desktop to open the report.
+
+
+## 8. Suggested Repository Structure
 
 ```text
 delivery-intelligence/
