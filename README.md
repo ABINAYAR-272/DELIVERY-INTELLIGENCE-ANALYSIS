@@ -198,7 +198,21 @@ BASE_DIR = Path(r"D:\DATA ANALYTICS\PROJECTS\DELIVERY_INTELLIGENCE_PROJECT")
 
 Change it to match the directory on your computer.
 
-## 10. Suggested Repository Structure
+## 10. POWERBI Dashboard
+
+Page 1: Delivery Overview
+
+This dashboard provides an overview of shipment records, profit, average shipping duration, late-delivery rate, city-level performance, and delivery status.
+<img width="668" height="380" alt="Screenshot 2026-10-14 095605" src="https://github.com/user-attachments/assets/abbd02ae-0d29-40fa-9cf6-3f4081b51928" />
+
+Page 2: Delivery Performance Analysis
+
+This dashboard compares late-delivery rates across product categories, regions, shipping modes, and customer segments
+<img width="664" height="374" alt="Screenshot 2026-10-14 095630" src="https://github.com/user-attachments/assets/ae6ec320-5411-43e7-ad62-d93e98f42d4b" />
+
+
+
+## Suggested Repository Structure
 
 ```text
 delivery-intelligence/
